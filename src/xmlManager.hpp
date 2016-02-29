@@ -18,8 +18,22 @@ class xmlManager
 public:
     xmlManager();
     int getObjectCount();
+    
+    /*
+     * Load the saved detected shapes.
+     */
     std::vector<Object *> getObjects();
+    
+    /*
+     * Save the detected shapes.
+     */
+    void saveObjects(std::vector<Object *> aObjects);
 
+    /*
+     * associate an object to a sound index in the xml.
+     */
+    void associateObjectAndSoundIndex(int aObjectIndex, int aSoundIndex);
+    
 private:
     ofxXmlSettings          XML;    
 };

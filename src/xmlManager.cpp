@@ -8,9 +8,11 @@
 
 #include "xmlManager.hpp"
 
+#define XML_PATH "mySettings.xml"
+
 xmlManager::xmlManager()
 {
-    if( XML.loadFile("mySettings.xml") ){
+    if( XML.loadFile(XML_PATH) ){
         std::cout << "mySettings.xml loaded!" << std::endl;
     }else{
         std::cout << "unable to load mySettings.xml check data/ folder" << std::endl;
@@ -20,6 +22,38 @@ xmlManager::xmlManager()
 int xmlManager::getObjectCount()
 {
     return XML.getNumTags("OBJECT");
+    
+}
+
+void xmlManager::saveObjects(std::vector<Object *> aObjects)
+{
+    XML.clear();
+    for(int o = 0; o < aObjects.size(); o++)
+    {
+        int objIndex = XML.addTag("OBJECT");
+        XML.pushTag("OBJECT", objIndex);
+        XML.addTag("SOUND");
+        XML.setValue("SOUND", aObjects[o]->getSoundIndex());
+        std::vector<ofVec2f> lPts = aObjects[o]->getPts();
+        for(int i = 0; i < lPts.size(); i++)
+        {
+            int tagNum = XML.addTag("PT");
+            XML.setValue("PT:X", lPts[i].x, tagNum);
+            XML.setValue("PT:Y", lPts[i].y, tagNum);
+        }
+        
+        XML.popTag();
+    }
+    
+    XML.saveFile(XML_PATH);
+}
+
+void xmlManager::associateObjectAndSoundIndex(int aObjectIndex, int aSoundIndex)
+{
+    if(XML.pushTag("OBJECT", aObjectIndex))
+    {
+        XML.popTag();
+    }
     
 }
 

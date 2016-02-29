@@ -72,15 +72,13 @@ float Object::getDistance(ofxCvBlob * aBlob, float & aAngleStart)
     return lDistanceMin;
 }
 
-void Object::draw(float x = 0, float y = 0)
+void Object::draw(float x = 0, float y = 0, int aColor = 0x00FFFF)
 {
     ofNoFill();
-    ofSetHexColor(0x00FFFF);
+    ofSetHexColor(aColor);
     ofBeginShape();
     for (int i = 0; i < mShape.size(); i++){
         ofVertex(x + mShape[i].x, y + mShape[i].y);
     }
     ofEndShape(true);
-    ofSetHexColor(0xff0099);
-//    ofDrawRectangle(x + boundingRect.x, y + boundingRect.y, boundingRect.width, boundingRect.height);
 }

@@ -58,6 +58,8 @@ private:
     
     bool mDraw;
     
+    int mIndexShapeSelected;
+    
     /*
      *  list of user recorded objects.
      */

@@ -7,7 +7,7 @@ void ofApp::setup(){
     vidGrabber.setVerbose(true);
     vidGrabber.setup(320,240);
 #else
-    vidPlayer.load("testCam.3gp");
+    vidPlayer.load("testCamWithRotation.3gp");
     vidPlayer.play();
     vidPlayer.setVolume(0.f);
     vidPlayer.setLoopState(OF_LOOP_NORMAL);
@@ -43,6 +43,7 @@ void ofApp::saveShapes()
     
     for (int i = 0; i < contourFinder.nBlobs; i++){
         Object * lObject = new Object();
+        lObject->setSoundIndex(i);
         ofPoint lCenter = contourFinder.blobs[i].centroid;
         
         for(int pt = 0; pt < contourFinder.blobs[i].nPts; pt++)
@@ -51,6 +52,8 @@ void ofApp::saveShapes()
         }
         mRecordObjects.push_back(lObject);
     }
+    
+    mXmlManager.saveObjects(mRecordObjects);
 }
 
 //--------------------------------------------------------------
@@ -103,7 +106,7 @@ int ofApp::getClosest(int blobId)
 {
     ofxCvBlob lBlob = contourFinder.blobs[blobId];
     int lMinIndex = -1;
-    float lDistanceMin = 10000;
+    float lDistanceMin = 100;
     float lAngleMin = 0.f;
     int lCountUnderThreshold = 0;
     for(int i = 0; i < mRecordObjects.size(); i++)
@@ -157,10 +160,12 @@ void ofApp::draw(){
             contourFinder.blobs[i].draw(360,540);
             
             int lIndexClosest = getClosest(i);
-            std::stringstream lStr;
-            lStr << lIndexClosest;
-            ofDrawBitmapString(lStr.str(), contourFinder.blobs[i].centroid.x + 20, contourFinder.blobs[i].centroid.y + 20);
-            
+            if(lIndexClosest >= 0)
+            {
+                std::stringstream lStr;
+                lStr << lIndexClosest;
+                ofDrawBitmapString(lStr.str(), contourFinder.blobs[i].centroid.x + 20, contourFinder.blobs[i].centroid.y + 20);
+            }
             // draw over the centroid if the blob is a hole
             ofSetColor(255);
             if(contourFinder.blobs[i].hole){
@@ -172,7 +177,7 @@ void ofApp::draw(){
         
         for(int i = 0; i < mRecordObjects.size(); i++)
         {
-            mRecordObjects[i]->draw(700, 60 + 60 * i);
+            mRecordObjects[i]->draw(700, 60 + 60 * i, i == mIndexShapeSelected ? 0xFFFFFF : 0x000000);
             std::stringstream lStr;
             lStr << i;
             ofDrawBitmapString(lStr.str(), 700, 60 + 60 * i);
@@ -299,6 +304,17 @@ void ofApp::keyPressed(int key){
             break;
         case 'd':
             mDraw = !mDraw;
+            break;
+        case OF_KEY_DOWN:
+            mIndexShapeSelected++;
+            mIndexShapeSelected = mIndexShapeSelected % mRecordObjects.size();
+            break;
+        case OF_KEY_UP:
+            mIndexShapeSelected--;
+            if(mIndexShapeSelected < 0)
+            {
+                mIndexShapeSelected = mRecordObjects.size() - 1;
+            }
             break;
     }
 }
