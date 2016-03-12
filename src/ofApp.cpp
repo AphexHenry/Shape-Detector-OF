@@ -19,7 +19,7 @@ void ofApp::setup(){
     else {
         vidGrabber.setDeviceID(Settings::sCameraIndex);
     }
-    vidGrabber.setup(IMG_WIDTH,IMG_HEIGHT);
+    vidGrabber.setup(Settings::sCaptureWidth,Settings::sCaptureHeight);
 #else
     vidPlayer.load("FindingContours.mp4");
     vidPlayer.play();
@@ -27,10 +27,10 @@ void ofApp::setup(){
     vidPlayer.setLoopState(OF_LOOP_NORMAL);
 #endif
     
-    colorImg.allocate(IMG_WIDTH,IMG_HEIGHT);
-    grayImage.allocate(IMG_WIDTH,IMG_HEIGHT);
-    grayBg.allocate(IMG_WIDTH,IMG_HEIGHT);
-    grayDiff.allocate(IMG_WIDTH,IMG_HEIGHT);
+    colorImg.allocate(Settings::sCaptureWidth,Settings::sCaptureHeight);
+    grayImage.allocate(Settings::sCaptureWidth,Settings::sCaptureHeight);
+    grayBg.allocate(Settings::sCaptureWidth,Settings::sCaptureHeight);
+    grayDiff.allocate(Settings::sCaptureWidth,Settings::sCaptureHeight);
     
     bLearnBakground = true;
     Settings::sWhiteThreshold = 80;
@@ -174,10 +174,10 @@ void ofApp::draw(){
     {
         // draw the incoming, the grayscale, the bg and the thresholded difference
         ofSetHexColor(0xffffff);
-        colorImg.draw(20,20);
-        grayImage.draw(IMG_WIDTH + 40,20);
-        grayBg.draw(20,IMG_HEIGHT + 40);
-        grayDiff.draw(IMG_WIDTH + 40,IMG_HEIGHT+ 40);
+        colorImg.draw(20,20, IMG_WIDTH, IMG_HEIGHT);
+        grayImage.draw(IMG_WIDTH + 40,20, IMG_WIDTH, IMG_HEIGHT);
+        grayBg.draw(20,IMG_HEIGHT + 40, IMG_WIDTH, IMG_HEIGHT);
+        grayDiff.draw(IMG_WIDTH + 40,IMG_HEIGHT+ 40, IMG_WIDTH, IMG_HEIGHT);
         
         // then draw the contours:
         

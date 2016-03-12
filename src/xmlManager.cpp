@@ -31,7 +31,6 @@ xmlManager::xmlManager()
 int xmlManager::getObjectCount()
 {
     return XMLObjects.getNumTags("OBJECT");
-    
 }
 
 void xmlManager::saveObjects(std::vector<Object *> aObjects)
@@ -63,7 +62,6 @@ void xmlManager::associateObjectAndSoundIndex(int aObjectIndex, int aSoundIndex)
     {
         XMLObjects.popTag();
     }
-    
 }
 
 std::vector<Object *> xmlManager::getObjects()
@@ -116,6 +114,8 @@ void xmlManager::SaveSettings()
     XMLGeneral.addValue("whiteThreshold", Settings::sWhiteThreshold);
     XMLGeneral.addValue("cameraIndex", Settings::sCameraIndex);
     XMLGeneral.addValue("useKinect", Settings::sUseKinect);
+    XMLGeneral.addValue("captureWidth", Settings::sCaptureWidth);
+    XMLGeneral.addValue("captureHeight", Settings::sCaptureHeight);
     XMLGeneral.saveFile(XML_GENERAL_SETTINGS_PATH);
 }
 
@@ -124,4 +124,6 @@ void xmlManager::LoadSettings()
     Settings::sWhiteThreshold = XMLGeneral.getValue("whiteThreshold", Settings::sWhiteThreshold);
     Settings::sCameraIndex = XMLGeneral.getValue("cameraIndex", Settings::sCameraIndex);
     Settings::sUseKinect = XMLGeneral.getValue("useKinect", Settings::sUseKinect);
+    Settings::sCaptureWidth = XMLGeneral.getValue("captureWidth", Settings::sCaptureWidth);
+    Settings::sCaptureHeight = XMLGeneral.getValue("captureHeight", Settings::sCaptureHeight);
 }

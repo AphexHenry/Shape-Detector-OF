@@ -17,6 +17,8 @@ public:
     static int sWhiteThreshold;
     static int sCameraIndex;
     static bool sUseKinect;
+    static int sCaptureWidth;
+    static int sCaptureHeight;
 };
 
 #endif /* Settings_hpp */

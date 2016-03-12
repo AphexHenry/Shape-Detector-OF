@@ -11,3 +11,5 @@
 int Settings::sWhiteThreshold = 0.f;
 int Settings::sCameraIndex = 0;
 bool Settings::sUseKinect = false;
+int Settings::sCaptureWidth = 320;
+int Settings::sCaptureHeight = 240;
