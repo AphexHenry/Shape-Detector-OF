@@ -9,7 +9,7 @@
 #include "Object.hpp"
 
 Object::Object(){
-    
+    mSoundIndex = 0;
 }
 
 void Object::addPt(float aX, float aY)
@@ -72,7 +72,7 @@ float Object::getDistance(ofxCvBlob * aBlob, float & aAngleStart)
     return lDistanceMin;
 }
 
-void Object::draw(float x = 0, float y = 0, int aColor = 0x00FFFF)
+void Object::drawShape(float x = 0, float y = 0, int aColor = 0x00FFFF)
 {
     ofNoFill();
     ofSetHexColor(aColor);
@@ -81,4 +81,15 @@ void Object::draw(float x = 0, float y = 0, int aColor = 0x00FFFF)
         ofVertex(x + mShape[i].x, y + mShape[i].y);
     }
     ofEndShape(true);
+    
+    std::stringstream lStr;
+    lStr << "sound" << mSoundIndex;
+    ofSetHexColor(0xFFFFFF);
+    ofDrawBitmapString(lStr.str(), x + 40, y);
+
+}
+
+void Object::drawBlob(float x, float y, int index)
+{
+    mBlobSmoother.draw(x,y, index);
 }

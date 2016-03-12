@@ -29,13 +29,16 @@ public:
      */
     void saveObjects(std::vector<Object *> aObjects);
 
+    void SaveSettings();
+    
     /*
      * associate an object to a sound index in the xml.
      */
     void associateObjectAndSoundIndex(int aObjectIndex, int aSoundIndex);
     
 private:
-    ofxXmlSettings          XML;    
+    ofxXmlSettings          XMLObjects;
+    ofxXmlSettings          XMLGeneral;
 };
 
 #endif /* xmlManager_hpp */

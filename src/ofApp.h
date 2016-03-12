@@ -30,7 +30,7 @@ public:
     void gotMessage(ofMessage msg);
     
     void simplifyDP_openCV ( const vector<ofPoint>& contourIn, vector<ofPoint>& contourOut, float tolerance );
-    int getClosest(int i);
+    float getClosest(int blobId, int & aClosestId);
     
 #ifdef _USE_LIVE_VIDEO
 		  ofVideoGrabber 		vidGrabber;
@@ -49,7 +49,6 @@ private:
     
     ofxCvContourFinder 	contourFinder;
     
-    int 				threshold;
     bool				bLearnBakground;
     
     ofImage             rectImg;

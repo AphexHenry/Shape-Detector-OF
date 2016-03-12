@@ -1,9 +1,12 @@
 #include "ofApp.h"
+#include "Settings.hpp"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
     
 #ifdef _USE_LIVE_VIDEO
+    vidGrabber.setDeviceID(1);
+    vector<ofVideoDevice> lVec = vidGrabber.listDevices();
     vidGrabber.setVerbose(true);
     vidGrabber.setup(320,240);
 #else
@@ -21,7 +24,7 @@ void ofApp::setup(){
     grayDiff.allocate(320,240);
     
     bLearnBakground = true;
-    threshold = 80;
+    Settings::sWhiteThreshold = 80;
     
     int numDragTags = mXmlManager.getObjectCount();
     
@@ -30,6 +33,7 @@ void ofApp::setup(){
         mRecordObjects = mXmlManager.getObjects();
     }
     
+    mIndexShapeSelected = 0;
     mDraw = true;
 }
 
@@ -86,23 +90,18 @@ void ofApp::update(){
         
         // take the abs value of the difference between background and incoming and then threshold:
         grayDiff.absDiff(grayBg, grayImage);
-        grayDiff.threshold(threshold);
+        grayDiff.threshold(Settings::sWhiteThreshold);
         
         // find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
         // also, find holes is set to true so we will get interior contours as well....
         contourFinder.findContours(grayDiff, 20, (340*240)/3, 10, false, false);	// find holes
         
-//        for (int i = 0; i < contourFinder.nBlobs; i++){
-//
-//
-////            contourFinder.blobs[i].pts = contourOut;
-////            contourFinder.blobs[i].nPts = contourOut.size();
-//            std::cout << contourFinder.blobs[i].nPts << std::endl;
-//        }
+        std::vector<BlobSmoother::Blobito> * lBlobSorter[mRecordObjects.size()];
+        
     }
 }
 
-int ofApp::getClosest(int blobId)
+float ofApp::getClosest(int blobId, int & aClosestId)
 {
     ofxCvBlob lBlob = contourFinder.blobs[blobId];
     int lMinIndex = -1;
@@ -113,13 +112,6 @@ int ofApp::getClosest(int blobId)
     {
         float lAngleStart = 0.f;
         float lDistance = mRecordObjects[i]->getDistance(&lBlob, lAngleStart);
-//        if(lDistance < 10)
-//        {
-//            lAngleMin = lAngleStart;
-//            lDistanceMin = lDistance;
-//            lMinIndex = i;
-//            break;
-//        }
         
         if(lDistance < lDistanceMin)
         {
@@ -128,8 +120,9 @@ int ofApp::getClosest(int blobId)
             lMinIndex = i;
         }
     }
-//    std::cout << "associate " << blobId << " with distance " << lDistanceMin << " and angle" << lAngleMin << " nclose " << lCountUnderThreshold << std::endl;
-    return lMinIndex;
+
+    aClosestId = lMinIndex;
+    return lDistanceMin;
 }
 
 //--------------------------------------------------------------
@@ -158,28 +151,31 @@ void ofApp::draw(){
         // this is how to get access to them:
         for (int i = 0; i < contourFinder.nBlobs; i++){
             contourFinder.blobs[i].draw(360,540);
-            
-            int lIndexClosest = getClosest(i);
+
+            int lIndexClosest;
+            getClosest(i, lIndexClosest);
             if(lIndexClosest >= 0)
             {
                 std::stringstream lStr;
                 lStr << lIndexClosest;
                 ofDrawBitmapString(lStr.str(), contourFinder.blobs[i].centroid.x + 20, contourFinder.blobs[i].centroid.y + 20);
             }
-            // draw over the centroid if the blob is a hole
-            ofSetColor(255);
-            if(contourFinder.blobs[i].hole){
-                ofDrawBitmapString("hole",
-                                   contourFinder.blobs[i].boundingRect.getCenter().x + 360,
-                                   contourFinder.blobs[i].boundingRect.getCenter().y + 540);
-            }
+//            // draw over the centroid if the blob is a hole
+//            ofSetColor(255);
+//            if(contourFinder.blobs[i].hole){
+//                ofDrawBitmapString("hole",
+//                                   contourFinder.blobs[i].boundingRect.getCenter().x + 360,
+//                                   contourFinder.blobs[i].boundingRect.getCenter().y + 540);
+//            }
         }
         
         for(int i = 0; i < mRecordObjects.size(); i++)
         {
-            mRecordObjects[i]->draw(700, 60 + 60 * i, i == mIndexShapeSelected ? 0xFFFFFF : 0x000000);
+            mRecordObjects[i]->drawShape(700, 60 + 60 * i, i == mIndexShapeSelected ? 0xFFFFFF : 0x000000);
+//            mRecordObjects[i]->drawBlob(20, 20, i);
             std::stringstream lStr;
             lStr << i;
+            ofSetHexColor(0xFFFFFF);
             ofDrawBitmapString(lStr.str(), 700, 60 + 60 * i);
         }
     }
@@ -189,7 +185,7 @@ void ofApp::draw(){
     stringstream reportStr;
     reportStr << "bg subtraction and blob detection" << endl
     << "press ' ' to capture bg" << endl
-    << "threshold " << threshold << " (press: +/-)" << endl
+    << "threshold " << Settings::sWhiteThreshold << " (press: +/-)" << endl
     << "num blobs found " << contourFinder.nBlobs << ", fps: " << ofGetFrameRate();
     ofDrawBitmapString(reportStr.str(), 20, 600);
 }
@@ -292,18 +288,21 @@ void ofApp::keyPressed(int key){
             bLearnBakground = true;
             break;
         case '+':
-            threshold ++;
-            if (threshold > 255) threshold = 255;
+            Settings::sWhiteThreshold ++;
+            if (Settings::sWhiteThreshold > 255) Settings::sWhiteThreshold = 255;
             break;
         case '-':
-            threshold --;
-            if (threshold < 0) threshold = 0;
+            Settings::sWhiteThreshold --;
+            if (Settings::sWhiteThreshold < 0) Settings::sWhiteThreshold = 0;
             break;
         case 's':
             saveShapes();
             break;
         case 'd':
             mDraw = !mDraw;
+            break;
+        case 'g':
+            mXmlManager.SaveSettings();
             break;
         case OF_KEY_DOWN:
             mIndexShapeSelected++;
@@ -315,6 +314,12 @@ void ofApp::keyPressed(int key){
             {
                 mIndexShapeSelected = mRecordObjects.size() - 1;
             }
+            break;
+        case OF_KEY_RIGHT:
+            mRecordObjects[mIndexShapeSelected]->pushSoundIndex(1);
+            break;
+        case OF_KEY_LEFT:
+            mRecordObjects[mIndexShapeSelected]->pushSoundIndex(-1);
             break;
     }
 }

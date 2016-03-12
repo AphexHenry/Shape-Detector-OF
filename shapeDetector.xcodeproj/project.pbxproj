@@ -25,7 +25,9 @@
 		8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
 		933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2B40EDA85BEB63E46785BC29 /* tinyxml.cpp */; };
 		9C3A78421C8305950031D52B /* xmlManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C3A78401C8305950031D52B /* xmlManager.cpp */; };
+		9C3A78461C84E9DA0031D52B /* BlobSmoother.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C3A78441C84E9DA0031D52B /* BlobSmoother.cpp */; };
 		9C52F20E1C8301D80086C29C /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C52F20C1C8301D80086C29C /* Object.cpp */; };
+		9CDA563E1C94309000DE8C3B /* Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA563C1C94309000DE8C3B /* Settings.cpp */; };
 		9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 832BDC407620CDBA568B713D /* tinyxmlerror.cpp */; };
 		ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD194746185E2DA11468377 /* IpEndpointName.cpp */; };
 		C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
@@ -188,8 +190,12 @@
 		9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
 		9C3A78401C8305950031D52B /* xmlManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmlManager.cpp; sourceTree = "<group>"; };
 		9C3A78411C8305950031D52B /* xmlManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = xmlManager.hpp; sourceTree = "<group>"; };
+		9C3A78441C84E9DA0031D52B /* BlobSmoother.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlobSmoother.cpp; sourceTree = "<group>"; };
+		9C3A78451C84E9DA0031D52B /* BlobSmoother.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlobSmoother.hpp; sourceTree = "<group>"; };
 		9C52F20C1C8301D80086C29C /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
 		9C52F20D1C8301D80086C29C /* Object.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Object.hpp; sourceTree = "<group>"; };
+		9CDA563C1C94309000DE8C3B /* Settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Settings.cpp; sourceTree = "<group>"; };
+		9CDA563D1C94309000DE8C3B /* Settings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Settings.hpp; sourceTree = "<group>"; };
 		9DA0CBD43DA38386EB04C9AE /* miniflann.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = miniflann.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/miniflann.hpp; sourceTree = SOURCE_ROOT; };
 		9F7986DC4EB05E75FCE2C777 /* ofxOscSender.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscSender.h; path = ../../../addons/ofxOsc/src/ofxOscSender.h; sourceTree = SOURCE_ROOT; };
 		9FF9126184DFBDE8A912373E /* highgui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = highgui.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/highgui.h; sourceTree = SOURCE_ROOT; };
@@ -837,6 +843,10 @@
 				9C52F20D1C8301D80086C29C /* Object.hpp */,
 				9C3A78401C8305950031D52B /* xmlManager.cpp */,
 				9C3A78411C8305950031D52B /* xmlManager.hpp */,
+				9C3A78441C84E9DA0031D52B /* BlobSmoother.cpp */,
+				9C3A78451C84E9DA0031D52B /* BlobSmoother.hpp */,
+				9CDA563C1C94309000DE8C3B /* Settings.cpp */,
+				9CDA563D1C94309000DE8C3B /* Settings.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -996,6 +1006,7 @@
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				250A95BA26587BE85DB0A353 /* ofxCvColorImage.cpp in Sources */,
 				1D5F3298C2FA073628012944 /* ofxCvContourFinder.cpp in Sources */,
+				9CDA563E1C94309000DE8C3B /* Settings.cpp in Sources */,
 				9C52F20E1C8301D80086C29C /* Object.cpp in Sources */,
 				169D3C72FDE6C5590A1616F5 /* ofxCvFloatImage.cpp in Sources */,
 				FB09C6B2A1DA0EA217240CB8 /* ofxCvGrayscaleImage.cpp in Sources */,
@@ -1013,6 +1024,7 @@
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
+				9C3A78461C84E9DA0031D52B /* BlobSmoother.cpp in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
 				63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */,
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
