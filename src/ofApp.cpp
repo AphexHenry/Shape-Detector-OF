@@ -14,7 +14,7 @@ void ofApp::setup(){
     vidGrabber.setVerbose(true);
     vidGrabber.setup(IMG_WIDTH,IMG_HEIGHT);
 #else
-    vidPlayer.load("testCamWithRotation.3gp");
+    vidPlayer.load("FindingContours.mp4");
     vidPlayer.play();
     vidPlayer.setVolume(0.f);
     vidPlayer.setLoopState(OF_LOOP_NORMAL);
@@ -35,6 +35,11 @@ void ofApp::setup(){
         mRecordObjects = mXmlManager.getObjects();
     }
     
+    for(int i = 0; i < mRecordObjects.size(); i++)
+    {
+        mRecordObjects[i]->setCenter(ofVec2f(IMG_WIDTH * 0.5, IMG_HEIGHT * 0.5));
+    }
+    
     mIndexShapeSelected = 0;
     mDraw = true;
     mNextFrame = true;
@@ -52,6 +57,7 @@ void ofApp::saveShapes()
     for (int i = 0; i < contourFinder.nBlobs; i++){
         Object * lObject = new Object();
         lObject->setSoundIndex(i);
+        lObject->setCenter(ofVec2f(IMG_WIDTH * 0.5, IMG_HEIGHT * 0.5));
         ofPoint lCenter = contourFinder.blobs[i].centroid;
         
         for(int pt = 0; pt < contourFinder.blobs[i].nPts; pt++)

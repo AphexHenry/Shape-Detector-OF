@@ -81,7 +81,7 @@ void BlobSmoother::digestFrame()
     }
     
     mIntensity = ofClamp(mIntensity, 0.f, 1.f);
-    polar(mPos.x, mPos.y, mRadius, mAngle);
+    polar(mPos.x - mCenter.x, mPos.y - mCenter.y, mRadius, mAngle);
 }
 
 void BlobSmoother::draw(float x = 0, float y = 0, int index = 0)
@@ -102,7 +102,7 @@ void BlobSmoother::draw(float x = 0, float y = 0, int index = 0)
 
 void BlobSmoother::polar(float x, float y, float& r, float& theta)
 {
-    r = sqrt((pow(x,2))+(pow(y,2)));
+    r = sqrt(x*x + y*y) / mCenter.x;
     
     if(fabs(x) < 0.0000f)
     {
@@ -116,6 +116,6 @@ void BlobSmoother::polar(float x, float y, float& r, float& theta)
         }
     }
     else {
-        theta = atan(y/x);
+        theta = atan2(y,x);
     }
 }

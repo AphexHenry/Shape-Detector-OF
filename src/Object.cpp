@@ -10,6 +10,7 @@
 
 Object::Object(){
     mSoundIndex = 0;
+    
 }
 
 void Object::addPt(float aX, float aY)
@@ -106,8 +107,8 @@ ofxOscMessage Object::getOSCMessage()
 
     ofxOscMessage m;
     m.setAddress(lStr.str());
-    m.addFloatArg(mBlobSmoother.getAngle());
     m.addFloatArg(mBlobSmoother.getRadius());
+    m.addFloatArg(mBlobSmoother.getAngle());
     m.addFloatArg(mBlobSmoother.getIntensity());
     return m;
 }

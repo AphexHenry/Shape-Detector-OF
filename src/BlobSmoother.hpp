@@ -22,6 +22,8 @@ public:
     };
     
     BlobSmoother();
+    
+    void setCenter(ofVec2f aCenter) {mCenter = aCenter;};
 //    void newFrameWithBlobs(std::vector<Blobito> aBlobArray);
     void draw(float x, float y, int aIndex);
     
@@ -47,6 +49,7 @@ private:
     
     bool mShouldSendUpdate;
     
+    ofVec2f mCenter;
     ofVec2f mPos;
     ofVec2f mSpeed;
 };

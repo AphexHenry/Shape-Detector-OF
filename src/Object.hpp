@@ -18,6 +18,8 @@
 class Object {
 public:
     Object();
+    
+    void setCenter(ofVec2f aCenter) {mBlobSmoother.setCenter(aCenter);};
     void addPt(float aX, float aY);
     void addPt(ofPoint aPt);
     float getDistance(ofxCvBlob * aBlob, float & aAngleStart);
