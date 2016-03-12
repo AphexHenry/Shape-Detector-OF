@@ -83,11 +83,16 @@ void Object::drawShape(float x = 0, float y = 0, int aColor = 0x00FFFF)
     }
     ofEndShape(true);
     
+    ofSetHexColor(0xFFFFFF);
+    ofDrawBitmapString(mObjectName, x + 40, y);
+
+}
+
+void Object::updateName()
+{
     std::stringstream lStr;
     lStr << "sound" << mSoundIndex;
-    ofSetHexColor(0xFFFFFF);
-    ofDrawBitmapString(lStr.str(), x + 40, y);
-
+    mObjectName = lStr.str();
 }
 
 void Object::drawBlob(float x, float y, int index)

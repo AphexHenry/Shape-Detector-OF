@@ -20,6 +20,7 @@ void ofApp::setup(){
         vidGrabber.setDeviceID(Settings::sCameraIndex);
     }
     vidGrabber.setup(Settings::sCaptureWidth,Settings::sCaptureHeight);
+    vidGrabber.setDesiredFrameRate(60);
 #else
     vidPlayer.load("FindingContours.mp4");
     vidPlayer.play();
@@ -197,9 +198,9 @@ void ofApp::draw(){
             int lIndexClosest = mBlobMapper[i];
             if(lIndexClosest >= 0)
             {
-                std::stringstream lStr;
-                lStr << lIndexClosest;
-                ofDrawBitmapString(lStr.str(), contourFinder.blobs[i].centroid.x + 15, contourFinder.blobs[i].centroid.y + 15);
+//                std::stringstream lStr;
+//                lStr << lIndexClosest;
+                ofDrawBitmapString(mRecordObjects[lIndexClosest]->getName(), contourFinder.blobs[i].centroid.x + 15, contourFinder.blobs[i].centroid.y + 15);
             }
         }
         
@@ -207,10 +208,8 @@ void ofApp::draw(){
         {
             mRecordObjects[i]->drawShape(2 * IMG_WIDTH + 60, 60 + 60 * i, i == mIndexShapeSelected ? 0xFFFFFF : 0x000000);
             mRecordObjects[i]->drawBlob(20, 20, i);
-//            std::stringstream lStr;
-//            lStr << i;
 //            ofSetHexColor(0xFFFFFF);
-//            ofDrawBitmapString(lStr.str(), 700, 60 + 60 * i);
+//            ofDrawBitmapString(mRecordObjects[i]->getName(), 700, 60 + 60 * i);
         }
     }
     

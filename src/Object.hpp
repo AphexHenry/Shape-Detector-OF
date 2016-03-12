@@ -30,8 +30,8 @@ public:
 //    void newFrameWithBlobs(std::vector<BlobSmoother::Blobito> aBlobArray) {mBlobSmoother.newFrameWithBlobs(aBlobArray);};
     
     int getSoundIndex() {return mSoundIndex;};
-    void setSoundIndex(int aSoundIndex) {mSoundIndex = aSoundIndex;};
-    void pushSoundIndex(int aValue) {mSoundIndex += aValue; mSoundIndex = mSoundIndex < 0 ? 0 : mSoundIndex;};
+    void setSoundIndex(int aSoundIndex) {mSoundIndex = aSoundIndex; updateName();};
+    void pushSoundIndex(int aValue) {mSoundIndex += aValue; mSoundIndex = mSoundIndex < 0 ? 0 : mSoundIndex; updateName();};
 
     ofxOscMessage getOSCMessage();
     
@@ -39,13 +39,18 @@ public:
     void addNewMatch(ofxCvBlob aBlob) {mBlobSmoother.addNewMatch(aBlob);};
     void digestFrame(){mBlobSmoother.digestFrame();};
     
+    std::string getName() {return mObjectName;};
+    
     bool wantToSendMessage();
     
 private:
     
+    void updateName();
+    
     BlobSmoother mBlobSmoother;
     
     int mSoundIndex;
+    std::string mObjectName;
     float getDistanceWithAngle(ofxCvBlob * aBlob, float aAngle);
     std::vector<ofVec2f> mShape;
 };

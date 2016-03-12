@@ -35,9 +35,9 @@
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 1,
-					"outlettype" : [ "int" ],
-					"patching_rect" : [ 217.0, 86.0, 39.0, 20.0 ],
-					"text" : "* 120"
+					"outlettype" : [ "float" ],
+					"patching_rect" : [ 217.0, 86.0, 42.0, 20.0 ],
+					"text" : "* 120."
 				}
 
 			}
@@ -342,7 +342,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "sfolder.maxpat",
-				"bootpath" : "/Users/baptistebohelay/Desktop/spat/Max Spat 0",
+				"bootpath" : "/Users/baptistebohelay/Desktop/spat/Max Spat",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1

@@ -1,3 +1,5 @@
 <whiteThreshold>80</whiteThreshold>
 <cameraIndex>0</cameraIndex>
 <useKinect>1</useKinect>
+<captureWidth>320</captureWidth>
+<captureHeight>240</captureHeight>
