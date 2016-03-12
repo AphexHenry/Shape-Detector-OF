@@ -93,3 +93,21 @@ void Object::drawBlob(float x, float y, int index)
 {
     mBlobSmoother.draw(x,y, index);
 }
+
+bool Object::wantToSendMessage()
+{
+    return mBlobSmoother.wantToSendMessage();
+}
+
+ofxOscMessage Object::getOSCMessage()
+{
+    std::stringstream lStr;
+    lStr << "/" << mSoundIndex;
+
+    ofxOscMessage m;
+    m.setAddress(lStr.str());
+    m.addFloatArg(mBlobSmoother.getAngle());
+    m.addFloatArg(mBlobSmoother.getRadius());
+    m.addFloatArg(mBlobSmoother.getIntensity());
+    return m;
+}

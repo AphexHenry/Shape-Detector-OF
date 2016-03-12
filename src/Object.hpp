@@ -13,6 +13,7 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 #include "BlobSmoother.hpp"
+#include "ofxOsc.h"
 
 class Object {
 public:
@@ -24,12 +25,20 @@ public:
     void drawBlob(float x, float y, int index);
     std::vector<ofVec2f> getPts() {return mShape;};
     
-    void newFrameWithBlobs(std::vector<BlobSmoother::Blobito> aBlobArray) {mBlobSmoother.newFrameWithBlobs(aBlobArray);};
+//    void newFrameWithBlobs(std::vector<BlobSmoother::Blobito> aBlobArray) {mBlobSmoother.newFrameWithBlobs(aBlobArray);};
     
     int getSoundIndex() {return mSoundIndex;};
     void setSoundIndex(int aSoundIndex) {mSoundIndex = aSoundIndex;};
     void pushSoundIndex(int aValue) {mSoundIndex += aValue; mSoundIndex = mSoundIndex < 0 ? 0 : mSoundIndex;};
 
+    ofxOscMessage getOSCMessage();
+    
+    void startNewFrame(){mBlobSmoother.startNewFrame();};
+    void addNewMatch(ofxCvBlob aBlob) {mBlobSmoother.addNewMatch(aBlob);};
+    void digestFrame(){mBlobSmoother.digestFrame();};
+    
+    bool wantToSendMessage();
+    
 private:
     
     BlobSmoother mBlobSmoother;

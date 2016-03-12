@@ -29,7 +29,6 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    void simplifyDP_openCV ( const vector<ofPoint>& contourIn, vector<ofPoint>& contourOut, float tolerance );
     float getClosest(int blobId, int & aClosestId);
     
 #ifdef _USE_LIVE_VIDEO
@@ -41,6 +40,8 @@ private:
     
     void saveShapes();
     
+    std::vector<int> mBlobMapper;
+    
     ofxCvColorImage			colorImg;
     
     ofxCvGrayscaleImage 	grayImage;
@@ -51,13 +52,14 @@ private:
     
     bool				bLearnBakground;
     
-    ofImage             rectImg;
-    
     xmlManager      mXmlManager;
     
     bool mDraw;
+    bool mNextFrame;
     
     int mIndexShapeSelected;
+    
+    ofxOscSender sender;
     
     /*
      *  list of user recorded objects.
