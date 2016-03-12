@@ -37,6 +37,9 @@ public:
     void associateObjectAndSoundIndex(int aObjectIndex, int aSoundIndex);
     
 private:
+    
+    void LoadSettings();
+    
     ofxXmlSettings          XMLObjects;
     ofxXmlSettings          XMLGeneral;
 };

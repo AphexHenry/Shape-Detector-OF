@@ -16,6 +16,7 @@ class Settings
 public:
     static int sWhiteThreshold;
     static int sCameraIndex;
+    static bool sUseKinect;
 };
 
 #endif /* Settings_hpp */

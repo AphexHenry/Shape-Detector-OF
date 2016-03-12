@@ -10,20 +10,21 @@
 #include "Settings.hpp"
 
 #define XML_OBJECTS_SETTINGS_PATH "ObjectsSettings.xml"
-#define XML_GENERAL_SETTINGS_PATH "ObjectsSettings.xml"
+#define XML_GENERAL_SETTINGS_PATH "GeneralSettings.xml"
 
 xmlManager::xmlManager()
 {
     if( XMLObjects.loadFile(XML_OBJECTS_SETTINGS_PATH) ){
-        std::cout << "mySettings.xml loaded!" << std::endl;
+        std::cout << XML_OBJECTS_SETTINGS_PATH << " loaded!" << std::endl;
     }else{
-        std::cout << "unable to load mySettings.xml check data/ folder" << std::endl;
+        std::cout << "unable to load "<< XML_OBJECTS_SETTINGS_PATH << " check data/ folder" << std::endl;
     }
     
     if( XMLGeneral.loadFile(XML_GENERAL_SETTINGS_PATH) ){
-        std::cout << "mySettings.xml loaded!" << std::endl;
+        std::cout << XML_GENERAL_SETTINGS_PATH << " loaded!" << std::endl;
+        LoadSettings();
     }else{
-        std::cout << "unable to load mySettings.xml check data/ folder" << std::endl;
+        std::cout << "unable to load "<< XML_GENERAL_SETTINGS_PATH << " check data/ folder" << std::endl;
     }
 }
 
@@ -114,5 +115,13 @@ void xmlManager::SaveSettings()
     XMLGeneral.clear();
     XMLGeneral.addValue("whiteThreshold", Settings::sWhiteThreshold);
     XMLGeneral.addValue("cameraIndex", Settings::sCameraIndex);
+    XMLGeneral.addValue("useKinect", Settings::sUseKinect);
     XMLGeneral.saveFile(XML_GENERAL_SETTINGS_PATH);
+}
+
+void xmlManager::LoadSettings()
+{
+    Settings::sWhiteThreshold = XMLGeneral.getValue("whiteThreshold", Settings::sWhiteThreshold);
+    Settings::sCameraIndex = XMLGeneral.getValue("cameraIndex", Settings::sCameraIndex);
+    Settings::sUseKinect = XMLGeneral.getValue("useKinect", Settings::sUseKinect);
 }

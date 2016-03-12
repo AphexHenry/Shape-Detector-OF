@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "Settings.hpp"
+#include "ofxPS3EyeGrabber.h"
 
 #define HOST "localhost"
 #define PORT 1314
@@ -9,9 +10,15 @@
 void ofApp::setup(){
     
 #ifdef _USE_LIVE_VIDEO
-    vidGrabber.setDeviceID(1);
     vector<ofVideoDevice> lVec = vidGrabber.listDevices();
     vidGrabber.setVerbose(true);
+    if(Settings::sUseKinect == 1)
+    {
+        vidGrabber.setGrabber(std::make_shared<ofxPS3EyeGrabber>());
+    }
+    else {
+        vidGrabber.setDeviceID(Settings::sCameraIndex);
+    }
     vidGrabber.setup(IMG_WIDTH,IMG_HEIGHT);
 #else
     vidPlayer.load("FindingContours.mp4");

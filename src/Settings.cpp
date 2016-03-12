@@ -10,3 +10,4 @@
 
 int Settings::sWhiteThreshold = 0.f;
 int Settings::sCameraIndex = 0;
+bool Settings::sUseKinect = false;

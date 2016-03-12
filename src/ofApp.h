@@ -7,7 +7,7 @@
 #include "Object.hpp"
 #include "xmlManager.hpp"
 
-//#define _USE_LIVE_VIDEO		// uncomment this to use a live camera
+#define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
 
 class ofApp : public ofBaseApp{
